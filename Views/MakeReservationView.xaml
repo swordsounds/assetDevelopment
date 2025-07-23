@@ -29,12 +29,12 @@
             <TextBlock 
                 Grid.Row="0"
                 FontSize="18"
-                Text="Name:" />
+                Text="Username:" />
 
             <TextBox 
                 Grid.Row="1"
                 Margin="0 5 0 0"
-                Text="" />
+                Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" />
 
         </Grid>
 
@@ -58,7 +58,7 @@
                 Grid.Row="1"
                 Grid.Column="0"
                 Margin="0 5 0 0"
-                Text="" />
+                Text="{Binding FloorNumber, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock 
                 Grid.Row="0"
@@ -71,7 +71,7 @@
                 Grid.Row="1"
                 Grid.Column="1"
                 Margin="5 5 0 0"
-                Text="" />
+                Text="{Binding RoomNumber, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>
 
         <Grid Grid.Row="3">
@@ -94,7 +94,7 @@
          Grid.Row="1"
          Grid.Column="0"
          Margin="0 5 0 0"
-         SelectedDate="" />
+         SelectedDate="{Binding StartDate, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock 
          Grid.Row="0"
@@ -107,12 +107,12 @@
          Grid.Row="1"
          Grid.Column="1"
          Margin="5 5 0 0"
-         SelectedDate="" />
+         SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>
 
         <StackPanel Grid.Row="4" Orientation="Horizontal">
-            <Button Content="Submit" />
-            <Button Margin="5 0 0 0" Content="Cancel" />
+            <Button Content="Submit" Command="{Binding SubmitCommand}"/>
+            <Button Margin="5 0 0 0"  Command="{Binding CancelCommand}" Content="Cancel" />
         </StackPanel>
 
     </Grid>

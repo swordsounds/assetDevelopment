@@ -22,9 +22,5 @@ namespace assetDevelopment
             this.DataContext = this;
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
     }
 }
