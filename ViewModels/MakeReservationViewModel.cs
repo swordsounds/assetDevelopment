@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using assetDevelopment.Commands;
+using assetDevelopment.Models;
+using assetDevelopment.Services;
+using assetDevelopment.Stores;
 
 namespace assetDevelopment.ViewModels
 {
@@ -51,7 +55,7 @@ namespace assetDevelopment.ViewModels
 			}
 		}
 
-		private DateTime _startDate;
+		private DateTime _startDate = new DateTime(2021, 1, 1);
 		public DateTime StartDate
 		{
 			get
@@ -65,7 +69,7 @@ namespace assetDevelopment.ViewModels
 			}
 		}
 
-		private DateTime _endDate;
+		private DateTime _endDate =  new DateTime(2021, 1, 8);
 		public DateTime EndDate
 		{
 			get
@@ -83,9 +87,10 @@ namespace assetDevelopment.ViewModels
 
         public ICommand CancelCommand { get; }
 
-		public MakeReservationViewModel()
+        public MakeReservationViewModel(Hotel hotel, NavigationService reservationViewNavigationService)
 		{
-
+			SubmitCommand = new MakeReservationCommand(this, hotel, reservationViewNavigationService);
+			CancelCommand = new NavigateCommand(reservationViewNavigationService);
 		}
     }
 }

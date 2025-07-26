@@ -1,4 +1,7 @@
-﻿using assetDevelopment.Models;
+﻿using assetDevelopment.Commands;
+using assetDevelopment.Models;
+using assetDevelopment.Services;
+using assetDevelopment.Stores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,14 +18,31 @@ namespace assetDevelopment.ViewModels
 
         public IEnumerable<ReservationViewModel> Reservations => _reservations;
         public ICommand MakeReservationCommand { get; }
+        public ICommand LoadReservationsCommand { get; }
 
-        public ReservationListingViewModel()
+        public ReservationListingViewModel(Hotel hotel, NavigationService makeReservationViewNavigationService)
+ 
         {
             _reservations = new ObservableCollection<ReservationViewModel>();
 
-            _reservations.Add(new ReservationViewModel(new Reservation(new RoomID(1, 2), "Alice", DateTime.Now, DateTime.Now)));
-            _reservations.Add(new ReservationViewModel(new Reservation(new RoomID(3, 2), "John", DateTime.Now, DateTime.Now)));
-            _reservations.Add(new ReservationViewModel(new Reservation(new RoomID(2, 2), "Mark", DateTime.Now, DateTime.Now)));
+            LoadReservationsCommand = new LoadReservationsCommand(hotel, this);
+            MakeReservationCommand = new NavigateCommand(makeReservationViewNavigationService);
+        }
+
+        public static ReservationListingViewModel LoadViewModel(Hotel hotel, NavigationService makeReservationViewNavigationService)
+        {
+            ReservationListingViewModel viewModel = new ReservationListingViewModel(hotel, makeReservationViewNavigationService);
+            viewModel.LoadReservationsCommand.Execute(null);
+            return viewModel;
+        }
+        public void UpdateReservations(IEnumerable<Reservation> reservations)
+        {
+            _reservations.Clear();
+            foreach (Reservation reservation in reservations)
+            {
+                ReservationViewModel reservationViewModel = new ReservationViewModel(reservation);
+                _reservations.Add(reservationViewModel);
+            }
         }
     }
 }
